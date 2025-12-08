@@ -1,0 +1,43 @@
+* {
+   margin: 0;
+   padding: 0;
+   box-sizing: border-box;
+}
+html{
+   font-size: 62.5%;
+   font-family: "Urbanist",sans-serif;
+}
+body{
+   font-size: 1.6rem;
+}
+p,li,input{
+   font-size: 1.7rem;
+   letter-spacing: 0.14rem;
+}
+::placeholder{
+   font-family: "Urbanist"sans-serif;
+   font-size: 1.4rem;
+   letter-spacing: 0.1rem;
+}
+ button,h1{
+
+   font-family: Montserrat;
+ }
+ .container{
+   display: flex;
+   justify-content: center;
+align-items: center;
+   height: 100vh;
+    width: 100%; 
+    background-color: #2d3436;
+    background-image: linear-gradient(315deg,#2d3436 0%,#0000 74%);
+ }
+ .todo-app{
+   width: 100%;
+   max-width: 54rem;
+   margin: 10rem auto 2rem;
+   padding: 4rem,3rem;
+   border-radius: 1rem;
+   background: linear-gradient(to right,#ece9e6,#ffff);
+   box-shadow: rgba(255, 255,255, 0.2) 0rem 0.2rem 1rem;
+ }
