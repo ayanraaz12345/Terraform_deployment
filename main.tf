@@ -5,7 +5,7 @@ provider "aws" {
 ############ Security Group ############
 resource "aws_security_group" "ec2_sg" {
   name   = "ec2_security_group"
-  vpc_id = "default"
+  vpc_id = "vpc-09676ee6651e2619e"
 
   ingress {
     from_port   = 22
