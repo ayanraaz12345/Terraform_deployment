@@ -31,7 +31,7 @@ resource "aws_security_group" "ec2_sg" {
 
 ############ EC2 Instance ############
 resource "aws_instance" "app_ec2" {
-  ami                    = "" # Amazon Linux 2
+  ami                    = "ami-0ecb62995f68bb549" 
   instance_type          = "t2.micro"
   key_name               = var.key_pair
   security_groups        = [aws_security_group.ec2_sg.name]
