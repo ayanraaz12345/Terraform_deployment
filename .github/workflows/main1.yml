@@ -16,7 +16,7 @@ jobs:
 
     defaults:
       run:
-        working-directory: Terraform_deployment/src   # <-- FIXED
+        working-directory: Terraform_deployment   # <-- FIXED
 
     steps:
       - name: Checkout repo
