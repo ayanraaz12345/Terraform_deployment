@@ -9,16 +9,16 @@ data "aws_vpc" "default" {
 
 ############ Security Group ############
 resource "aws_security_group" "ec2_sg" {
-  name        = "ec2_security_group_new"     # new unique name
+  name        = "ec2_security_group_neww"     # new unique name
   description = "Allow SSH + Nginx"
   vpc_id      = data.aws_vpc.default.id
 
-   lifecycle {
-    create_before_destroy = true
-    ignore_changes        = [
-      name
-    ]
-}
+   # lifecycle {
+   # create_before_destroy = true
+   # ignore_changes        = [
+   #   name
+   # ]
+#}
   ingress {
     from_port   = 22
     to_port     = 22
@@ -49,7 +49,7 @@ resource "aws_instance" "app_ec2" {
   vpc_security_group_ids = [aws_security_group.ec2_sg.id]
 
   tags = {
-    Name = "github-actions-ec2"
+    Name = "github-actions-ec22"
   }
 
   user_data = <<EOF
