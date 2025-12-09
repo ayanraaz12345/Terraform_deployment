@@ -13,6 +13,12 @@ resource "aws_security_group" "ec2_sg" {
   description = "Allow SSH + Nginx"
   vpc_id      = data.aws_vpc.default.id
 
+   lifecycle {
+    create_before_destroy = true
+    ignore_changes        = [
+      name
+    ]
+
   ingress {
     from_port   = 22
     to_port     = 22
