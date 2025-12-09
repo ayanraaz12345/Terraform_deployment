@@ -4,8 +4,9 @@ provider "aws" {
 
 ############ Security Group ############
 resource "aws_security_group" "ec2_sg" {
-  name   = "ec2_security_group"
-  vpc_id = "vpc-09676ee6651e2619e"
+  name        = "ec2_security_group_new"       # ⬅ renamed to avoid duplicate
+  description = "Allow SSH + Nginx"
+  vpc_id      = data.aws_vpc.default.id
 
   ingress {
     from_port   = 22
@@ -24,17 +25,17 @@ resource "aws_security_group" "ec2_sg" {
   egress {
     from_port   = 0
     to_port     = 0
-    protocol    = "tcp"
+    protocol    = "-1"
     cidr_blocks = ["0.0.0.0/0"]
   }
 }
 
 ############ EC2 Instance ############
 resource "aws_instance" "app_ec2" {
-  ami                    = "ami-0ecb62995f68bb549" 
+  ami                    = "ami-0ecb62995f68bb549"
   instance_type          = "t2.micro"
-  key_name               = var.key_pair
-  security_groups        = [aws_security_group.ec2_sg.name]
+  key_name               = var.key_name
+  vpc_security_group_ids = [aws_security_group.ec2_sg.id]
 
   tags = {
     Name = "github-actions-ec2"
@@ -47,4 +48,13 @@ yum install -y nginx
 systemctl enable nginx
 systemctl start nginx
 EOF
+}
+
+############ Outputs ############
+output "public_ip" {
+  value = aws_instance.app_ec2.public_ip
+}
+
+output "url" {
+  value = "http://${aws_instance.app_ec2.public_ip}"
 }
