@@ -16,10 +16,10 @@ jobs:
 
     defaults:
       run:
-        working-directory: Terraform_deployment # ⬅️ Change if your terraform folder name is different
+        working-directory: Terraform_deployment/src   # <-- FIXED
 
     steps:
-      - name: Checkout repository
+      - name: Checkout repo
         uses: actions/checkout@v4
 
       - name: Setup Terraform
