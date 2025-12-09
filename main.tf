@@ -3,7 +3,7 @@ provider "aws" {
 }
 
 ############ Security Group ############
-esource "aws_security_group" "ec2_sg" {
+resource "aws_security_group" "ec2_sg" {
   name   = "ec2_security_group"
   vpc_id = "default"
 
