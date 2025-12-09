@@ -3,10 +3,9 @@ provider "aws" {
 }
 
 ############ Security Group ############
-resource "aws_security_group" "ec2_sg" {
-  name        = "ec2_security_group"
-  description = "Security group for EC2 instance"
-  vpc_id      = data.aws_vpc.default.id
+esource "aws_security_group" "ec2_sg" {
+  name   = "ec2_security_group"
+  vpc_id = "default"
 
   ingress {
     from_port   = 22
