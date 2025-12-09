@@ -16,11 +16,14 @@ jobs:
 
     defaults:
       run:
-        working-directory: Terraform_deployment/src   # <-- correct path based on your screenshot
+        working-directory: src/
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+
+      - name: Print working directory
+        run: pwd && ls -R
 
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v3
