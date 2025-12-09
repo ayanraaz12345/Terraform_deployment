@@ -1,10 +1,8 @@
-name: Terraform EC2 CI
+name: Terraform EC2 Deployment
 
 on:
   push:
-    branches: [ main ]
-  pull_request:
-    branches: [ main ]
+    branches: [ "main" ]
   workflow_dispatch:
 
 jobs:
@@ -18,7 +16,7 @@ jobs:
 
     defaults:
       run:
-        working-directory: infra
+        working-directory: infra   # ⬅️ Change if your terraform folder name is different
 
     steps:
       - name: Checkout repository
@@ -38,7 +36,6 @@ jobs:
       - name: Terraform Plan
         run: terraform plan -out=tfplan -input=false
 
-      # ⚠️ Auto-apply on main – you can protect with environments if you want approval
       - name: Terraform Apply
         if: github.ref == 'refs/heads/main'
-        run: terraform apply -input=false -auto-approve tfplan
+        run: terraform apply -auto-approve tfplan
