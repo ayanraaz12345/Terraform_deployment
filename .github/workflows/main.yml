@@ -16,7 +16,8 @@ jobs:
 
     defaults:
       run:
-        working-directory: Terraform_deployment   # ⬅️ Change if your terraform folder name is different
+       working-directory: Terraform_deployment
+   # ⬅️ Change if your terraform folder name is different
 
     steps:
       - name: Checkout repository
