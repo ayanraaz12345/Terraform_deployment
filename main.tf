@@ -18,7 +18,7 @@ resource "aws_security_group" "ec2_sg" {
     ignore_changes        = [
       name
     ]
-
+}
   ingress {
     from_port   = 22
     to_port     = 22
