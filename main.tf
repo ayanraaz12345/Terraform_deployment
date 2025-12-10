@@ -9,16 +9,10 @@ data "aws_vpc" "default" {
 
 ############ Security Group ############
 resource "aws_security_group" "ec2_sg" {
-  name        = "ec2_security_group_neww"     # new unique name
-  description = "Allow SSH + Nginx"
+  name        = "terraform-sg"
+  description = "Allow SSH + HTTP + Jenkins"
   vpc_id      = data.aws_vpc.default.id
 
-   # lifecycle {
-   # create_before_destroy = true
-   # ignore_changes        = [
-   #   name
-   # ]
-#}
   ingress {
     from_port   = 22
     to_port     = 22
@@ -33,6 +27,13 @@ resource "aws_security_group" "ec2_sg" {
     cidr_blocks = ["0.0.0.0/0"]
   }
 
+  ingress {
+    from_port   = 8080
+    to_port     = 8080
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]   # Jenkins Port
+  }
+
   egress {
     from_port   = 0
     to_port     = 0
@@ -41,7 +42,13 @@ resource "aws_security_group" "ec2_sg" {
   }
 }
 
-############ EC2 Instance ############
+############ S3 Bucket ############
+resource "aws_s3_bucket" "my_bucket" {
+  bucket = "terraform-deploy-bucket-12345"
+  force_destroy = true
+}
+
+############ EC2 Instance (Install Jenkins + Nginx) #########
 resource "aws_instance" "app_ec2" {
   ami                    = "ami-0ecb62995f68bb549"
   instance_type          = "t3.micro"
@@ -49,23 +56,17 @@ resource "aws_instance" "app_ec2" {
   vpc_security_group_ids = [aws_security_group.ec2_sg.id]
 
   tags = {
-    Name = "github-actions-ec22"
+    Name = "terraform-jenkins-ec2"
   }
 
-  user_data = <<EOF
-#!/bin/bash
-apt update -y
-apt install -y nginx
-systemctl enable nginx
-systemctl start nginx
-EOF
+  user_data = file("jenkins.sh")
 }
 
 ############ Outputs ############
-output "public_ip" {
-  value = aws_instance.app_ec2.public_ip
+output "jenkins_url" {
+  value = "http://${aws_instance.app_ec2.public_ip}:8080"
 }
 
-output "url" {
-  value = "http://${aws_instance.app_ec2.public_ip}"
+output "public_ip" {
+  value = aws_instance.app_ec2.public_ip
 }
