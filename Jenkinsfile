@@ -5,7 +5,7 @@ pipeline {
         stage('Pull Code') {
             steps {
                 git branch: 'main',
-                    url: 'https://github.com/ayanraaz12345/Terraform_deployment.git'
+                    url: 'https://github.com/ayanraaz12345/Terraform_deployment'
             }
         }
 
