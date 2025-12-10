@@ -9,7 +9,7 @@ data "aws_vpc" "default" {
 
 ############ Security Group ############
 resource "aws_security_group" "ec2_sg" {
-  name        = "terraform-sg"
+  name = "terraform-sg-${timestamp()}"
   description = "Allow SSH + HTTP + Jenkins"
   vpc_id      = data.aws_vpc.default.id
 
