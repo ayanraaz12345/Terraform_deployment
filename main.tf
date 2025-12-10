@@ -2,6 +2,11 @@ provider "aws" {
   region = "us-east-1"
 }
 
+############ Generate Random ID ############
+resource "random_id" "rand" {
+  byte_length = 4
+}
+
 ############ Fetch Default VPC ############
 data "aws_vpc" "default" {
   default = true
@@ -9,7 +14,7 @@ data "aws_vpc" "default" {
 
 ############ Security Group ############
 resource "aws_security_group" "ec2_sg" {
-  name = "terraform-sg-${timestamp()}"
+  name        = "terraform-sg-${random_id.rand.hex}"
   description = "Allow SSH + HTTP + Jenkins"
   vpc_id      = data.aws_vpc.default.id
 
@@ -44,7 +49,7 @@ resource "aws_security_group" "ec2_sg" {
 
 ############ S3 Bucket ############
 resource "aws_s3_bucket" "my_bucket" {
-  bucket = "terraform-deploy-bucket-12345"
+  bucket        = "terraform-deploy-${random_id.rand.hex}"
   force_destroy = true
 }
 
